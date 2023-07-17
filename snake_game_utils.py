@@ -46,3 +46,11 @@ def move_snake(snake_head):
         xpos = snake_head.xcor()
         xpos += 20
         snake_head.setx(xpos)
+
+def reset(head, tails):
+    head.home()
+    head.direction = ""
+    for tail in tails:
+        tail.hideturtle()
+    tails.clear()
+
