@@ -2,10 +2,17 @@ from snake_game_utils import *
 from time import sleep
 
 score = 0
-high_score = 0
+
+try:
+    with open("snake_result.txt", "r") as file:
+        high_score = int(file.read())
+except:
+    high_score = 0
 
 
 def on_close():
+    with open("snake_result.txt","w") as file:
+        file.write(str(high_score))
     global running
     running = False
 
@@ -59,7 +66,7 @@ snake_tails = []
 running = True
 while running:
     score_board.clear()
-    score_board.write(f"Score : {score}\tHighScore: {high_score}", align="center", \
+    score_board.write(f"Score : {score}\tHighScore: {high_score}", align="center",
                       font=("Terminal", 22, "normal"))
     main_surface.update()
     if snake_head.distance(snake_food) < 20:
@@ -94,15 +101,3 @@ while running:
             score = 0
 
     sleep(0.2)
-
-
-"""
-    try:                                  
-...     f = open("snake_scores.txt")
-...     f.read()
-... except:                          
-...     f = open("snake_scores.txt", "w")
-...     f.write("123")
-
-
-"""
