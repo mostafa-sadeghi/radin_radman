@@ -29,7 +29,8 @@ player_rect.centery = WINDOW_HEIGHT/2 + 20
 
 food = pygame.image.load("food.png")
 food_rect = food.get_rect()
-food_rect.center = (WINDOW_WIDTH + 100 , randint(80, WINDOW_HEIGHT - 80))
+food_rect.center = (WINDOW_WIDTH + 100,
+                    randint(80, WINDOW_HEIGHT - 80))
 
 
 pygame.mixer.music.load("bg.mp3")
@@ -50,29 +51,39 @@ while running:
             if event.key == pygame.K_ESCAPE:
                 running = False
 
-
     keys = pygame.key.get_pressed()
     if keys[pygame.K_UP] and player_rect.top > 50:
         player_rect.y -= 5
     if keys[pygame.K_DOWN] and player_rect.bottom <= WINDOW_HEIGHT:
         player_rect.y += 5
-    
+
+    if player_rect.colliderect(food_rect):
+        # TODO play catch sound
+        # TODO add score
+        # TODO render score text
+        food_rect.center = (WINDOW_WIDTH + 100,
+                            randint(80,
+                                    WINDOW_HEIGHT
+                                    - 80))
 
     food_rect.x -= 5
     if food_rect.x <= 0:
-        food_rect.center = (WINDOW_WIDTH + 100 , randint(80, WINDOW_HEIGHT - 80))
+        food_rect.center = (WINDOW_WIDTH + 100,
+                            randint(80,
+                                    WINDOW_HEIGHT
+                                    - 80))
         lose_sound.play()
+        # TODO decrease player's lives
+        # TODO render player lives text and show it in display surface
 
-
-
-    main_surface.fill((0,0,0))
+    main_surface.fill((0, 0, 0))
     main_surface.blit(dragon_left, dragon_left_rect)
     main_surface.blit(dragon_right, (WINDOW_WIDTH-48, 0))
     main_surface.blit(title_text, title_rect)
     pygame.draw.line(main_surface,
                      (0, 255, 0), (0, 50),
                      (WINDOW_WIDTH, 50), 4)
-    
+
     main_surface.blit(player_image, player_rect)
     main_surface.blit(food, food_rect)
     pygame.display.update()
