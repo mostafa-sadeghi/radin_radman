@@ -3,17 +3,23 @@ from random import randint
 pygame.init()
 WINDOW_WIDTH = 1000
 WINDOW_HEIGHT = 600
-
+score = 0
 main_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 pygame.display.set_caption("Dragon Game")
 
 font = pygame.font.Font("minecraft.ttf",
-                        62)
+                        42)
 title_text = font.render("Dragon Game", True,
                          (0, 255, 0))
 title_rect = title_text.get_rect()
 title_rect.top = 0
 title_rect.centerx = WINDOW_WIDTH/2
+
+score_text = font.render(f"Score:{score}", True,
+                         (0, 255, 0))
+score_rect = score_text.get_rect()
+score_rect.topleft = (60, 0)
+
 
 dragon_left = pygame.image.load("dragon.png")
 dragon_left_rect = dragon_left.get_rect()
@@ -60,7 +66,10 @@ while running:
     if player_rect.colliderect(food_rect):
         # TODO play catch sound
         # TODO add score
+        score += 1
         # TODO render score text
+        score_text = font.render(f"Score:{score}", True,
+                                 (0, 255, 0))
         food_rect.center = (WINDOW_WIDTH + 100,
                             randint(80,
                                     WINDOW_HEIGHT
@@ -86,6 +95,7 @@ while running:
 
     main_surface.blit(player_image, player_rect)
     main_surface.blit(food, food_rect)
+    main_surface.blit(score_text, score_rect)
     pygame.display.update()
     clock.tick(FPS)
 
