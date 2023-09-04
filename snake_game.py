@@ -11,7 +11,7 @@ except:
 
 
 def on_close():
-    with open("snake_result.txt","w") as file:
+    with open("snake_result.txt", "w") as file:
         file.write(str(high_score))
     global running
     running = False
@@ -48,6 +48,8 @@ snake_head.direction = ""
 
 snake_food = make_turtle("circle", "red")
 change_food_position(snake_food)
+snake_bomb = make_turtle("circle", "green")
+change_food_position(snake_bomb)
 
 score_board = make_turtle("square", "white")
 score_board.ht()
@@ -74,6 +76,13 @@ while running:
         score += 1
         new_tail = make_turtle("square", "grey")
         snake_tails.append(new_tail)
+    if len(snake_tails) > 0:
+        if snake_head.distance(snake_bomb) < 20:
+            change_food_position(snake_bomb)
+            score -= 1
+
+            snake_tails[len(snake_tails)-1].ht()
+            inedx = snake_tails.pop()
 
     for i in range(len(snake_tails) - 1, 0, -1):
         prev_x = snake_tails[i - 1].xcor()
