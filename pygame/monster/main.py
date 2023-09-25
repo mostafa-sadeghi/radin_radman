@@ -3,7 +3,7 @@ from config import *
 from player import Player
 pygame.init()
 
-main_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 pygame.display.set_caption("Dragon Game")
 
 
@@ -20,7 +20,6 @@ while running:
             if event.key == pygame.K_ESCAPE:
                 running = False
 
-    
     my_player.draw(display_surface)
     my_player.update()
     pygame.display.update()
